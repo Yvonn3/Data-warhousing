@@ -1,0 +1,3 @@
+SET temp_directory TO '/tmp'
+.multiline
+.mode quote;
