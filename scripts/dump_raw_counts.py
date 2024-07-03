@@ -1,24 +1,24 @@
+#!/usr/bin/env python
 import duckdb
+import sys
 
-# Connect to  DuckDB database
-con = duckdb.connect('main.db')
-
-tables = [
-    'bike_data',
-    'central_park_weather',
-    'fhv_bases',
-    'fhv_tripdata',
-    'fhvhv_tripdata',
-    'green_tripdata',
-    'yellow_tripdata'    
+raw_tables = [
+    "central_park_weather",
+    "fhv_bases",
+    "fhv_tripdata",
+    "fhvhv_tripdata",
+    "green_tripdata",
+    "yellow_tripdata",
+    "bike_data",
 ]
 
-with open('answers/raw_counts.txt', 'w') as f:
-    for table in tables:
-        # Execute the SQL command to get the row count
-        result = con.execute(f'SELECT COUNT(*) FROM {table}').fetchone()
-        # Print and save the table name and row count
-        print(f'{table}: {result[0]}')
-        f.write(f'{table}: {result[0]}\n')
 
-con.close()
+def main(conn):
+    for t in sorted(raw_tables):
+        rows = conn.sql(f"SELECT COUNT(*) FROM {t}").fetchone()[0]
+        print(t, rows)
+
+
+if __name__ == "__main__":
+    with duckdb.connect(sys.argv[1]) as conn:
+        main(conn)
