@@ -20,5 +20,14 @@ renamed as (
     filename
     from source
 )
--- Select all columns from the 'renamed' CTE.
-select * from renamed
+-- Select columns from the 'renamed' CTE.
+select 
+    date,
+    awnd,
+    prcp,
+    snow,
+    snwd,
+    tmax,
+    tmin,
+    filename
+from renamed

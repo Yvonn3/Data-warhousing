@@ -4,38 +4,32 @@ with source as (
 ),
 renamed as (
     select
-        --keep VAR, because it contains alphabet and numbers
         hvfhs_license_num,
-        dispatching_base_num,
-        originating_base_num,
-        --convert datatime columns into timestamp type
-        request_datetime::timestamp as request_datetime,
-        on_scene_datetime::timestamp as on_scene_datetime,
-        pickup_datetime::timestamp as pickup_datetime,
-        dropoff_datetime::timestamp as dropoff_datetime,
-        --keep ID VAR data type
-        PULocationID,
-        DOLocationID,
-
-        trip_miles::double as trip_miles,
-        --convert into int type
-        trip_time::int as trip_time,
-        --convert expense columns into double type        
-        base_passenger_fare::double as base_passenger_fare,
-        tolls::double as tolls,
-        bcf::double as bcf,
-        sales_tax::double as sales_tax,
-        congestion_surcharge::double as congestion_surcharge,
-        airport_fee::double as airport_fee,
-        tips::double as tips,
-        driver_pay::double as driver_pay,
+        trim(upper(dispatching_base_num)) as dispatching_base_num,
+        trim(upper(originating_base_num)) as originating_base_num,
+        request_datetime,
+        on_scene_datetime,
+        pickup_datetime,
+        dropoff_datetime,
+        pulocationid,
+        dolocationid,
+        trip_miles,
+        trip_time,
+        base_passenger_fare,
+        tolls,
+        bcf,
+        sales_tax,
+        congestion_surcharge,
+        airport_fee,
+        tips,
+        driver_pay,
         --unique values of flag: Y N
         --use macro to convert into true/false
-        {{ yn_to_boolean('shared_request_flag') }} AS shared_request_flag_bool,
-        {{ yn_to_boolean('shared_match_flag') }} AS shared_match_flag_bool,
-        {{ yn_to_boolean('access_a_ride_flag') }} AS access_a_ride_flag_bool,
-        {{ yn_to_boolean('wav_request_flag') }} AS wav_request_flag_bool,
-        {{ yn_to_boolean('wav_match_flag') }} AS wav_match_flag_bool,
+        {{flag_to_bool("shared_request_flag")}} as shared_request_flag,
+        {{flag_to_bool("shared_match_flag")}} as shared_match_flag,
+        {{flag_to_bool("access_a_ride_flag")}} as access_a_ride_flag,
+        {{flag_to_bool("wav_request_flag")}} as wav_request_flag,
+        {{flag_to_bool("wav_match_flag",)}} as wav_match_flag,
         filename
     from source
 )

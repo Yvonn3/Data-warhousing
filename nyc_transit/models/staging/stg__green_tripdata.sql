@@ -3,35 +3,33 @@ with source as (
     select * from {{ source('main', 'green_tripdata') }}
 ),
 renamed as (
+
     select
-        VendorID::VARCHAR as VendorID,
+        vendorid,
         lpep_pickup_datetime,
         lpep_dropoff_datetime,
-        --convert to boolean using macros
-        {{ yn_to_boolean('store_and_fwd_flag') }} AS store_and_fwd_flag,
-        --convert to int. unique values:1,2,3,4,5,99
-        RatecodeID::int as RatecodeID,
-        PULocationID,
-        DOLocationID,
-        --convert count columns to int
+        {{flag_to_bool("store_and_fwd_flag")}} as store_and_fwd_flag,        
+        ratecodeid,
+        pulocationid,
+        dolocationid,
         passenger_count::int as passenger_count,
         trip_distance,
-        --keep expenses columns as double
         fare_amount,
         extra,
         mta_tax,
         tip_amount,
         tolls_amount,
-        ehail_fee,
+        --ehail_fee, --removed due to 100% null source data
         improvement_surcharge,
         total_amount,
-        --convert into int. unique values: 1,2,3,4,5
-        payment_type::int as payment_type,
-        --convert to int        
-        trip_type::int as trip_type,
-        congestion_surcharge::double as congestion_surcharge,
+        payment_type,
+        trip_type,
+        congestion_surcharge,
         filename
+
     from source
+      WHERE lpep_pickup_datetime < TIMESTAMP '2022-12-31' -- drop rows in the future
+        AND trip_distance >= 0 -- drop negative trip_distance
 )
--- Select all columns from the 'renamed' CTE.
+
 select * from renamed

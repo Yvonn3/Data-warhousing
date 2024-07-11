@@ -4,8 +4,8 @@ with source as (
 ),
 renamed as (
     select
-    --keep VAR, Sample:B03249, containing alphabet and numbers
-        base_number,
+    -- clean up the base_num to be properly linked as foreign keys
+        trim(upper(base_number)) as base_number,
     --keep name/ category as VAR
         base_name,
         dba,

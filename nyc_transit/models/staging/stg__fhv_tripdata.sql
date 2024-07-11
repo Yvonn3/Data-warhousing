@@ -5,17 +5,15 @@ with source as (
 -- Define a second CTE named 'renamed' to perform column renaming and type casting.
 renamed as (
     select
-        --keep VAR, because it contains alphabet and numbers
-        dispatching_base_num,
+        trim(upper(dispatching_base_num)) as  dispatching_base_num, --some ids are lowercase
         --convert datatime columns into timestamp type
-        pickup_datetime::timestamp as pickup_datetime,
-        dropOff_datetime::timestamp as dropOff_datetime,
+        pickup_datetime,
+        dropoff_datetime,
         --keep ID VAR data type
         PUlocationID,
         DOlocationID,
         --drop SR_Flag because the columns contain no value
-        --keep VAR, because it contains alphabet and numbers
-        Affiliated_base_number,
+        trim(upper(affiliated_base_number)) as affiliated_base_number,
         filename
     from source
 )

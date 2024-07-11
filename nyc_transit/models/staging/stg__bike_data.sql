@@ -4,36 +4,27 @@ with source as (
 ),
 -- Define a second CTE named 'renamed' to perform column renaming and type casting.
 renamed as (
+
     select
-        --Convert into int
-        tripduration::int as tripduration,
-        --Convert time columns into timestamp
-        starttime::timestamp as starttime,
-        stoptime::timestamp as stoptime,
-        --not select columns
-        --"start station id"
-        --"start station name"
-        --"start station latitude"
-        --"start station longitude"
-        --"end station id"
-        --"end station name"
-        --"end station latitude"
-        --"end station longitude"
-        bikeid as bikeid,
-        --Unique value: Subscriber, Customer . Therefore keep the datatype as VAR.
+        tripduration,
+        starttime,
+        stoptime,
+        "start station id",
+        "start station name",
+        "start station latitude",
+        "start station longitude",
+        "end station id",
+        "end station name",
+        "end station latitude",
+        "end station longitude",
+        bikeid,
         usertype,
-        --Convert into int
-        "birth year"::int as birth_year,
-        --Unique value: 0,1,2. Convert into int
-        gender::int as gender,
-        --keep id as VAR
+        "birth year",
+        gender,
         ride_id,
-         --Unique value:  electric_bike, classic_bike, docked_bike. Therefore keep the datatype as VAR.
         rideable_type,
-        --Convert time columns into timestamp
-        started_at::timestamp as started_at,
-        ended_at::timestamp as ended_at,
-        --keep id/latitude/longtitude/name columns as VAR
+        started_at,
+        ended_at,
         start_station_name,
         start_station_id,
         end_station_name,
@@ -42,10 +33,24 @@ renamed as (
         start_lng,
         end_lat,
         end_lng,
-        --unique value: casual, member, therefore keep the datatype as VAR.
         member_casual,
         filename
+
     from source
+
 )
--- Select all columns from the 'renamed' CTE.
-select * from renamed
+
+select
+	coalesce(starttime, started_at)::timestamp as started_at_ts,
+	coalesce(stoptime, ended_at)::timestamp as ended_at_ts,
+	coalesce(tripduration::int,datediff('second', started_at_ts, ended_at_ts)) tripduration,
+	coalesce("start station id", start_station_id) as start_station_id,  
+	coalesce("start station name", start_station_name) as start_station_name,
+	coalesce("start station latitude", start_lat)::double as start_lat,
+	coalesce("start station longitude", start_lng)::double as start_lng, 
+	coalesce("end station id", end_station_id) as end_station_id,  
+	coalesce("end station name", end_station_name) as end_station_name,
+	coalesce("end station latitude", end_lat)::double as end_lat,
+	coalesce("end station longitude", end_lng)::double as end_lng,
+	filename
+from renamed
