@@ -5,10 +5,13 @@ sources:
         columns:
           - name: tripduration
             data_type: CHARACTER VARYING(256)
+            description: "Duration of the trip in seconds"
           - name: starttime
             data_type: CHARACTER VARYING(256)
+            description: "Data format previously:Timestamp when the trip started"
           - name: stoptime
             data_type: CHARACTER VARYING(256)
+            description: "Data format previously:Timestamp when the trip ended"
           - name: start station id
             data_type: CHARACTER VARYING(256)
           - name: start station name
@@ -29,39 +32,72 @@ sources:
             data_type: CHARACTER VARYING(256)
           - name: usertype
             data_type: CHARACTER VARYING(256)
+            description: "Type of user (Customer = 24-hour pass or 3-day pass user; Subscriber = Annual Member)."
+            tests:
+              - accepted_values:
+                  values: ['Customer', 'Subscriber']
+                  config:
+                    severity: warn
           - name: birth year
             data_type: CHARACTER VARYING(256)
           - name: gender
             data_type: CHARACTER VARYING(256)
+            description: "Gender of the rider (Zero=unknown; 1=male; 2=female)."
+            tests:
+            - accepted_values:
+                values: ['0', '1', '2']
+                config:
+                  severity: warn
           - name: ride_id
             data_type: CHARACTER VARYING(256)
           - name: rideable_type
             data_type: CHARACTER VARYING(256)
+            description: "Type of bike used for the ride."
+            tests:
+              - accepted_values:
+                  values: ['docked_bike', 'classic_bike','electric_bike']
+                  config:
+                    severity: warn
           - name: started_at
             data_type: CHARACTER VARYING(256)
+            description: "Timestamp when the trip started. Replaces 'starttime'"
           - name: ended_at
             data_type: CHARACTER VARYING(256)
+            description: "Timestamp when the trip ended. Replaces 'stoptime'"
           - name: start_station_name
             data_type: CHARACTER VARYING(256)
+            description: "Name of the start station."
           - name: start_station_id
             data_type: CHARACTER VARYING(256)
+            description: "Unique identifier of the start station."
           - name: end_station_name
             data_type: CHARACTER VARYING(256)
+            description: "Name of the end station."
           - name: end_station_id
             data_type: CHARACTER VARYING(256)
+            description: "Unique identifier of the end station."
           - name: start_lat
             data_type: CHARACTER VARYING(256)
+            description: "Latitude of the start station."                 
           - name: start_lng
             data_type: CHARACTER VARYING(256)
+            description: "Longitude of the start station."
           - name: end_lat
             data_type: CHARACTER VARYING(256)
+            description: "Latitude of the end station."
           - name: end_lng
             data_type: CHARACTER VARYING(256)
+            description: "Longitude of the end station."
           - name: member_casual
             data_type: CHARACTER VARYING(256)
+            description: "Indicates whether the rider is a member or a casual rider"
+            tests:
+              - accepted_values:
+                  values: ['casual', 'member']
+                  config:
+                    severity: warn
           - name: filename
             data_type: CHARACTER VARYING(256)
-
       - name: central_park_weather
         columns:
           - name: station
@@ -84,34 +120,49 @@ sources:
             data_type: CHARACTER VARYING(256)
           - name: filename
             data_type: CHARACTER VARYING(256)
-
+            
       - name: fhv_bases
         columns:
           - name: base_number
             data_type: CHARACTER VARYING(256)
+            description: The TLC license number of the dispatching base
           - name: base_name
             data_type: CHARACTER VARYING(256)
+            description: The official name of the base entity
           - name: dba
             data_type: CHARACTER VARYING(256)
+            description: The “doing business as” name of the base
           - name: dba_category
             data_type: CHARACTER VARYING(256)
+            description: category of the “doing business as”
           - name: filename
             data_type: CHARACTER VARYING(256)
-
       - name: fhv_tripdata
         columns:
           - name: dispatching_base_num
             data_type: CHARACTER VARYING(256)
+            description: The TLC Base License Number of the base that dispatched the trip
+            tests:
+              - not_null
+              - dbt_expectations.expect_column_to_exist
+              - relationships: 
+                  to: source('main','fhv_bases')
+                  field: base_number
           - name: pickup_datetime
             data_type: TIMESTAMP
+            description: The date and time of the trip pick-up
           - name: dropoff_datetime
             data_type: TIMESTAMP
+            description: The date and time of the trip dropoff
           - name: pulocationid
             data_type: DOUBLE
+            description: TLC Taxi Zone in which the trip began
           - name: dolocationid
             data_type: DOUBLE
+            description: TLC Taxi Zone in which the trip ended
           - name: sr_flag
             data_type: INTEGER
+            description: Indicates if the trip was a part of a shared ride chain offered by a High Volume FHV company (e.g. Uber Pool, Lyft Line). For shared trips, the value is 1. For non-shared rides, this field is null.
           - name: affiliated_base_number
             data_type: CHARACTER VARYING(256)
           - name: filename
@@ -121,52 +172,163 @@ sources:
         columns:
           - name: hvfhs_license_num
             data_type: CHARACTER VARYING(256)
+            description: "The TLC license number of the HVFHS base or business"
+            tests:
+              - accepted_values:
+                  values: ['HV0002', 'HV0003', 'HV0004', 'HV0005']
+                  config:
+                    severity: warn
           - name: dispatching_base_num
             data_type: CHARACTER VARYING(256)
+            description: "The TLC Base License Number of the base that dispatched the trip"
+            tests:
+              - not_null
+              - dbt_expectations.expect_column_to_exist
+              - relationships: 
+                  to: source('main','fhv_bases')
+                  field: base_number
           - name: originating_base_num
             data_type: CHARACTER VARYING(256)
+            description: "Base number of the base that received the original trip request"
           - name: request_datetime
             data_type: TIMESTAMP
+            description: "Datetime when passenger requested to be picked up"
+            tests:
+                - not_null
+                - dbt_expectations.expect_column_to_exist
           - name: on_scene_datetime
             data_type: TIMESTAMP
+            description: "Datetime when driver arrived at the pick-up location (Accessible Vehicles-only)"
           - name: pickup_datetime
             data_type: TIMESTAMP
+            description: "The date and time of the trip pick-up"
+            tests:
+              - not_null
+              - dbt_expectations.expect_column_to_exist          
           - name: dropoff_datetime
             data_type: TIMESTAMP
+            description: "The date and time of the trip drop-off"
+            tests:
+              - not_null
+              - dbt_expectations.expect_column_to_exist
           - name: pulocationid
             data_type: BIGINT
+            description: "TLC Taxi Zone in which the trip began"
           - name: dolocationid
             data_type: BIGINT
+            description: "TLC Taxi Zone in which the trip ended"
           - name: trip_miles
             data_type: DOUBLE
+            description: "Total miles for passenger trip"
+            tests:
+              - dbt_expectations.expect_column_to_exist
+              - dbt_expectations.expect_column_values_to_be_between:
+                  min_value: 0
+                  max_value: 10000
+                  strictly: False
           - name: trip_time
             data_type: BIGINT
+            description: "Total time in seconds for passenger trip"
           - name: base_passenger_fare
             data_type: DOUBLE
+            description: "Base passenger fare before tolls, tips, taxes, and fees"
           - name: tolls
             data_type: DOUBLE
+            description: "Total amount of all tolls paid in trip"
+            tests:
+              - dbt_expectations.expect_column_values_to_be_between:
+                  min_value: 0
+                  max_value: 1000
+                  strictly: False
           - name: bcf
             data_type: DOUBLE
+            description: "Total amount collected in trip for Black Car Fund"
+            tests:
+              - dbt_expectations.expect_column_values_to_be_between:
+                  min_value: 0
+                  max_value: 1000
+                  strictly: False
+
           - name: sales_tax
             data_type: DOUBLE
+            description: "Total amount collected in trip for NYS sales tax"
+            tests:
+              - dbt_expectations.expect_column_values_to_be_between:
+                  min_value: 0
+                  max_value: 1000
+                  strictly: False
           - name: congestion_surcharge
             data_type: DOUBLE
+            description: "Total amount collected in trip for NYS congestion surcharge"
+            tests:
+              - dbt_expectations.expect_column_values_to_be_between:
+                  min_value: 0
+                  max_value: 1000
+                  strictly: False
           - name: airport_fee
             data_type: DOUBLE
+            description: "$2.50 for both drop off and pick up at LaGuardia, Newark, and John F. Kennedy airports"
+            tests:
+              - dbt_expectations.expect_column_values_to_be_between:
+                  min_value: 0
+                  max_value: 1000
+                  strictly: False
           - name: tips
             data_type: DOUBLE
+            description: "Total amount of tips received from passenger"
+            tests:
+              - dbt_expectations.expect_column_values_to_be_between:
+                  min_value: 0
+                  max_value: 1000
+                  strictly: False
           - name: driver_pay
             data_type: DOUBLE
+            description: "Total driver pay (not including tolls or tips and net of commission, surcharges, or taxes)"
+            tests:
+              - dbt_expectations.expect_column_values_to_be_between:
+                  min_value: 0
+                  max_value: 1000
+                  strictly: False
           - name: shared_request_flag
             data_type: CHARACTER VARYING(256)
+            description: "Did the passenger agree to a shared/pooled ride, regardless of whether they were matched? (Y/N)"
+            tests:
+            - accepted_values:
+                values: ['Y', 'N']
+                config:
+                  severity: warn
           - name: shared_match_flag
             data_type: CHARACTER VARYING(256)
+            description: "Did the passenger share the vehicle with another passenger who booked separately at any point during the trip? (Y/N)"
+            tests:
+              - accepted_values:
+                  values: ['Y', 'N']
+                  config:
+                    severity: warn
           - name: access_a_ride_flag
             data_type: CHARACTER VARYING(256)
+            description: "Was the trip administered on behalf of the Metropolitan Transportation Authority (MTA)? (Y/N)"
+            tests:
+              - accepted_values:
+                  values: ['Y', 'N']
+                  config:
+                    severity: warn            
           - name: wav_request_flag
             data_type: CHARACTER VARYING(256)
+            description: "Did the passenger request a wheelchair-accessible vehicle (WAV)? (Y/N)"
+            tests:
+              - accepted_values:
+                  values: ['Y', 'N']
+                  config:
+                    severity: warn            
           - name: wav_match_flag
             data_type: CHARACTER VARYING(256)
+            description: "Did the trip occur in a wheelchair-accessible vehicle (WAV)? (Y/N)"
+            tests:
+              - accepted_values:
+                  values: ['Y', 'N']
+                  config:
+                    severity: warn            
           - name: filename
             data_type: CHARACTER VARYING(256)
 
