@@ -1,0 +1,50 @@
+┌───────────────────────────────────────────────┬────────────┐
+│                     Zone                      │ trip_count │
+│                    varchar                    │   int64    │
+├───────────────────────────────────────────────┼────────────┤
+│ Crotona Park East                             │      97095 │
+│ Parkchester                                   │      95768 │
+│ Manhattanville                                │      92770 │
+│ Westchester Village/Unionport                 │      92018 │
+│ Coney Island                                  │      91813 │
+│ Queens Village                                │      90845 │
+│ Longwood                                      │      89396 │
+│ Bensonhurst East                              │      88734 │
+│ Long Island City/Queens Plaza                 │      88236 │
+│ Fordham South                                 │      88003 │
+│ Rego Park                                     │      86465 │
+│ Maspeth                                       │      86141 │
+│ North Corona                                  │      85988 │
+│ Glendale                                      │      82127 │
+│ East Elmhurst                                 │      80637 │
+│ Madison                                       │      79677 │
+│ Allerton/Pelham Gardens                       │      79265 │
+│ Sunset Park East                              │      79236 │
+│ Saint George/New Brighton                     │      79076 │
+│ Financial District South                      │      78600 │
+│        ·                                      │         ·  │
+│        ·                                      │         ·  │
+│        ·                                      │         ·  │
+│ Pelham Bay Park                               │       7961 │
+│ City Island                                   │       7759 │
+│ Rossville/Woodrow                             │       7700 │
+│ Crotona Park                                  │       5848 │
+│ Forest Park/Highland Park                     │       5044 │
+│ Battery Park                                  │       4882 │
+│ Randalls Island                               │       4668 │
+│ Marine Park/Floyd Bennett Field               │       3598 │
+│ Highbridge Park                               │       3563 │
+│ Breezy Point/Fort Tilden/Riis Beach           │       3282 │
+│ Willets Point                                 │       2213 │
+│ Newark Airport                                │       1972 │
+│ Broad Channel                                 │       1592 │
+│ Green-Wood Cemetery                           │       1550 │
+│ Astoria Park                                  │       1396 │
+│ Freshkills Park                               │        786 │
+│ Jamaica Bay                                   │         78 │
+│ Great Kills Park                              │         63 │
+│ Governor's Island/Ellis Island/Liberty Island │         15 │
+│ Rikers Island                                 │         15 │
+├───────────────────────────────────────────────┴────────────┤
+│ 120 rows (40 shown)                              2 columns │
+└────────────────────────────────────────────────────────────┘

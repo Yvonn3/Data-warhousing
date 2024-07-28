@@ -1,0 +1,50 @@
+┌───────────────┬───────────────────────────────────┬────────┬──────────────────────┬──────────────────────┐
+│    Borough    │               Zone                │ trips  │ average_duration_min │ average_duration_sec │
+│    varchar    │              varchar              │ int64  │        double        │        double        │
+├───────────────┼───────────────────────────────────┼────────┼──────────────────────┼──────────────────────┤
+│ Bronx         │ Allerton/Pelham Gardens           │  79265 │                15.07 │               904.11 │
+│ Bronx         │ Bedford Park                      │ 184629 │                15.38 │               922.81 │
+│ Bronx         │ Belmont                           │ 110060 │                15.68 │               940.59 │
+│ Bronx         │ Bronx Park                        │  15648 │                 19.9 │               1193.9 │
+│ Bronx         │ Bronxdale                         │ 100726 │                15.69 │               941.16 │
+│ Bronx         │ City Island                       │   7759 │                23.25 │              1395.25 │
+│ Bronx         │ Claremont/Bathgate                │ 138417 │                15.29 │               917.23 │
+│ Bronx         │ Co-Op City                        │ 133845 │                16.75 │              1004.88 │
+│ Bronx         │ Country Club                      │  10361 │                15.98 │               958.85 │
+│ Bronx         │ Crotona Park                      │   5848 │                15.79 │               947.67 │
+│ Bronx         │ Crotona Park East                 │  97095 │                15.29 │               917.48 │
+│ Bronx         │ East Concourse/Concourse Village  │ 204852 │                16.05 │               963.23 │
+│ Bronx         │ East Tremont                      │ 169957 │                15.36 │               921.98 │
+│ Bronx         │ Eastchester                       │ 103462 │                15.08 │               904.74 │
+│ Bronx         │ Fordham South                     │  88003 │                15.74 │               944.65 │
+│ Bronx         │ Highbridge                        │ 139357 │                15.49 │               929.25 │
+│ Bronx         │ Hunts Point                       │ 119710 │                 16.1 │               966.05 │
+│ Bronx         │ Kingsbridge Heights               │ 105540 │                15.31 │               918.88 │
+│ Bronx         │ Longwood                          │  89396 │                16.33 │               979.86 │
+│ Bronx         │ Melrose South                     │ 175700 │                16.61 │               996.54 │
+│   ·           │       ·                           │    ·   │                   ·  │                  ·   │
+│   ·           │       ·                           │    ·   │                   ·  │                  ·   │
+│   ·           │       ·                           │    ·   │                   ·  │                  ·   │
+│ Staten Island │ Bloomfield/Emerson Hill           │  46416 │                 16.7 │               1002.2 │
+│ Staten Island │ Charleston/Tottenville            │  13165 │                17.71 │              1062.13 │
+│ Staten Island │ Eltingville/Annadale/Prince's Bay │  13082 │                16.79 │              1007.22 │
+│ Staten Island │ Freshkills Park                   │    786 │                17.42 │              1044.83 │
+│ Staten Island │ Great Kills                       │  19833 │                 17.3 │              1038.08 │
+│ Staten Island │ Great Kills Park                  │     63 │                18.17 │              1085.65 │
+│ Staten Island │ Grymes Hill/Clifton               │  34148 │                24.32 │               1459.0 │
+│ Staten Island │ Heartland Village/Todt Hill       │  32996 │                17.56 │              1053.39 │
+│ Staten Island │ Mariners Harbor                   │  45161 │                15.84 │               950.55 │
+│ Staten Island │ New Dorp/Midland Beach            │  18331 │                17.31 │              1038.79 │
+│ Staten Island │ Oakwood                           │  10949 │                18.37 │               1102.1 │
+│ Staten Island │ Port Richmond                     │  22583 │                16.95 │              1016.95 │
+│ Staten Island │ Rossville/Woodrow                 │   7700 │                17.17 │               1029.9 │
+│ Staten Island │ Saint George/New Brighton         │  79076 │                15.69 │                941.1 │
+│ Staten Island │ South Beach/Dongan Hills          │  26885 │                18.18 │              1090.46 │
+│ Staten Island │ Stapleton                         │  62147 │                23.44 │              1406.44 │
+│ Staten Island │ West Brighton                     │  25899 │                16.66 │               999.35 │
+│ Staten Island │ Westerleigh                       │  24261 │                14.83 │               889.82 │
+│ Unknown       │ NA                                │  29324 │                35.66 │              2136.59 │
+│ Unknown       │ NV                                │ 887462 │                35.74 │              2144.82 │
+├───────────────┴───────────────────────────────────┴────────┴──────────────────────┴──────────────────────┤
+│ 262 rows (40 shown)                                                                            5 columns │
+└──────────────────────────────────────────────────────────────────────────────────────────────────────────┘
